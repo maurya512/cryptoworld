@@ -10,7 +10,7 @@ import { Navbar, Exchanges, Homepage, Cryptocurrencies, News, CryptoDetails } fr
 import './App.css';
 
 const App = () => {
-    return <div className='App'>
+    return <div className='app'>
         {/* * navbar div */}
         <div className='navbar'>
             <Navbar />
