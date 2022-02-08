@@ -3,7 +3,7 @@ import React from "react";
 import { Routes, Route, Link } from 'react-router-dom';
 import { Layout, Typography, Space, Menu } from 'antd';
 
-// ! import components 
+// ! import components from another file
 import { Navbar, Exchanges, Homepage, Cryptocurrencies, News, CryptoDetails } from './components'
 
 // ! import style files 
@@ -29,8 +29,19 @@ const App = () => {
                     </Routes>
                 </div>
             </Layout>
+            {/* * footer div */}
+            <div className="footer">
+                <Typography.Title level={5} style={{ color: 'white', textAlign: 'center' }}>
+                    CryptoWorld <br />
+                    All rights reserved
+                </Typography.Title>
+                <Space >
+                    <Link to="/">Home</Link>
+                    <Link to="/exchanges">Exchanges</Link>
+                    <Link to="/news">News</Link>
+                </Space>
+            </div>
         </div>
-        {/* * footer div */}
     </div>;
 };
 
