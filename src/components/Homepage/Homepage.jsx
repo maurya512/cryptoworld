@@ -10,10 +10,14 @@ import { useGetCryptosQuery } from "../../services/cryptoApi";
 // * destructuring Title from Typography instead of Typography.Title
 const { Title } = Typography;
 const Homepage = () => {
-
+  // * define a state to get access to all the coins
   const { data, isFetching } = useGetCryptosQuery();
 
-  console.log(data);
+  // * assign the stats received from api to a variable
+  const globalStats = data?.data?.stats;
+  // console.log(data);
+  if (isFetching) return "Loading...";
+
   return (
     <>
       <Title level={2} className="heading">
@@ -23,11 +27,23 @@ const Homepage = () => {
         {/* * will take 12 spaces out of 24 spaces, so will fill up half the screen */}
         <Col span={12}>
           {/* * eventually will display real data from the api */}
-          <Statistic title="Total Cryptocurrencies" value="5" />
-          <Statistic title="Total Market Cap" value="5" />
-          <Statistic title="Total Markets" value="5" />
-          <Statistic title="Total Exchanges" value="5" />
-          <Statistic title="Total 24h Vol" value="5" />
+          <Statistic title="Total Cryptocurrencies" value={globalStats.total} />
+          <Statistic
+            title="Total Exchanges"
+            value={millify(globalStats.totalExchanges)}
+          />
+          <Statistic
+            title="Total Market Cap"
+            value={millify(globalStats.totalMarketCap)}
+          />
+          <Statistic
+            title="Total 24h Vol."
+            value={millify(globalStats.total24hVolume)}
+          />
+          <Statistic
+            title="Total Markets"
+            value={millify(globalStats.totalMarkets)}
+          />
         </Col>
       </Row>
     </>
