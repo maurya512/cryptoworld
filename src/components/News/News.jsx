@@ -33,6 +33,7 @@ const News = ({ simplified }) => {
                   {/* * image for news */}
                   {/* * display the news' image or a dummy image from folder */}
                   <img
+                    style={{ maxWidth: "200px", maxHeight: "100px" }}
                     src={news?.image?.thumbnail?.contentUrl || demoImage}
                     alt="news"
                   />
@@ -42,6 +43,24 @@ const News = ({ simplified }) => {
                     ? `${news.description.substring(0, 100)}...`
                     : news.description}
                 </p>
+                {/* ! displays the source of the article */}
+                <div className="provider-container">
+                  <div>
+                    <Avatar
+                      src={
+                        news.provider[0]?.image?.thumbnail?.contentUrl ||
+                        demoImage
+                      }
+                    />
+                    <Typography.Text className="provider-name">
+                      {news.provider[0]?.name}
+                    </Typography.Text>
+                  </div>
+                </div>
+                {/* ! displays the date of news article published */}
+                <Typography.Text>
+                  {moment(news.datePublished).startOf("ss").fromNow()}
+                </Typography.Text>
               </a>
             </Card>
           </Col>
