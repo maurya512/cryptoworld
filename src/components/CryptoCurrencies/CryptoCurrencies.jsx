@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // * import milify
 import millify from "millify";
@@ -11,13 +11,32 @@ import { useGetCryptosQuery } from "../../services/cryptoApi";
 const CryptoCurrencies = ({ simplified }) => {
   const count = simplified ? 10 : 100;
   const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
-  const [cryptos, setCryptos] = useState(cryptosList?.data?.coins);
+  const [cryptos, setCryptos] = useState([]);
+  // * defining a state with empty input field that registers for user input
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+
+    // ! allows us to search coins in an array of 100 crypto currencies
+    const filteredData = cryptosList?.data?.coins.filter((coin) =>
+      coin.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setCryptos(filteredData);
+  }, [cryptosList, searchTerm]);
 
   console.log(cryptos);
 
-  if(isFetching) return 'Loading....'
+  if (isFetching) return "Loading....";
   return (
     <>
+      {/* ! input field to get crypto name */}
+      <div className="search-crypto">
+        <Input
+          placeholder="Search Cryptocurrency"
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       <Row gutter={[32, 32]} className="crypto-card-container">
         {cryptos?.map((currency) => (
           <Col xs={24} sm={12} lg={6} className="crypto-card" key={currency.id}>
