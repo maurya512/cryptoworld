@@ -24,7 +24,7 @@ const Homepage = () => {
       <Title level={2} className="heading">
         Global Crypto Stats
       </Title>
-      <Row>
+      <Row gutter={[32, 32]}>
         {/* * will take 12 spaces out of 24 spaces, so will fill up half the screen */}
         <Col span={12}>
           {/* * eventually will display real data from the api */}
