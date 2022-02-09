@@ -12,7 +12,7 @@ import { Cryptocurrencies, News } from "../../components";
 const { Title } = Typography;
 const Homepage = () => {
   // * define a state to get access to all the coins
-  const { data, isFetching } = useGetCryptosQuery();
+  const { data, isFetching } = useGetCryptosQuery(10);
 
   // * assign the stats received from api to a variable
   const globalStats = data?.data?.stats;
