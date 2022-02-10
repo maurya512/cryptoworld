@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // ! import from ant design
 import { Select, Typography, Row, Col, Avatar, Card } from "antd";
 import moment from "moment";
@@ -6,22 +6,47 @@ import moment from "moment";
 // import { Text, Title } from Typography
 // ! importing the query to search and display news from the api
 import { useGetCryptoNewsQuery } from "../../services/newsApi";
+import { useGetCryptosQuery } from "../../services/cryptoApi";
 
 import demoImage from "../../images/cryptocurrency.png";
 
 // import { Option } from Select;
 
 const News = ({ simplified }) => {
+  // ! state for news category
+  const [newsCategory, setNewsCategory] = useState("Cryptocurrency");
   const { data: cryptoNews } = useGetCryptoNewsQuery({
-    newsCategory: "Cryptocurrency",
+    newsCategory: newsCategory,
     count: simplified ? 6 : 12,
   });
+  const { data } = useGetCryptosQuery(100);
 
   // * looping over the news
   if (!cryptoNews?.value) return "Loading....";
   return (
     <div>
       <Row gutter={[24, 24]}>
+        {!simplified && (
+          <Col span={24}>
+            <Select
+              showSearch
+              className="select-news"
+              placeholder="Select a news category"
+              optionFilterProp="children"
+              onChange={(value) => setNewsCategory(value)}
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase() >= 0)
+              }
+            >
+              <Select.Option value="Cryptocurrency">
+                Cryptocurrency
+              </Select.Option>
+              {data?.data?.coins.map((coin) => (
+                <Select.Option value={coin.name}>{coin.name}</Select.Option>
+              ))}
+            </Select>
+          </Col>
+        )}
         {cryptoNews.value.map((news, i) => (
           <Col xs={24} sm={12} lg={8} key={i}>
             <Card hoverable className="news-card">
